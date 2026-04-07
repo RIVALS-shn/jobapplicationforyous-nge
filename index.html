@@ -3,50 +3,81 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Solara Job Application</title>
+    <title>Solara Elite Application</title>
     <style>
-        body { background-color: #0a0a0a; color: #00ff41; font-family: 'Courier New', monospace; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 20px; }
-        .container { border: 1px solid #00ff41; padding: 30px; background: rgba(0, 255, 65, 0.05); box-shadow: 0 0 20px rgba(0, 255, 65, 0.2); border-radius: 10px; max-width: 500px; width: 100%; text-align: center; }
-        h1 { font-size: 1.8rem; text-shadow: 0 0 10px #00ff41; margin-bottom: 20px; }
+        body { background-color: #0a0a0a; color: #00ff41; font-family: 'Courier New', monospace; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; }
+        .container { border: 1px solid #00ff41; padding: 30px; background: rgba(0, 255, 65, 0.05); box-shadow: 0 0 20px rgba(0, 255, 65, 0.2); border-radius: 10px; max-width: 450px; width: 90%; text-align: center; }
+        h1 { font-size: 1.5rem; text-shadow: 0 0 10px #00ff41; margin-bottom: 20px; }
         label { display: block; margin-top: 15px; font-weight: bold; color: #fff; text-align: left; }
         input, select, textarea { width: 100%; padding: 10px; margin-top: 5px; background: #111; border: 1px solid #00ff41; color: #00ff41; border-radius: 5px; box-sizing: border-box; }
         .btn-submit { display: block; width: 100%; margin-top: 20px; padding: 15px; background: #00ff41; color: #000; border: none; font-weight: bold; cursor: pointer; text-transform: uppercase; }
-        .btn-submit:hover { background: #fff; box-shadow: 0 0 20px #fff; }
-        .download-section { margin-top: 30px; padding-top: 20px; border-top: 1px solid #333; }
-        .btn-download { color: #00ff41; text-decoration: underline; font-weight: bold; font-size: 1.2rem; }
+        
+        /* Sectiuni ascunse initial */
+        #loading, #downloadSection { display: none; }
+
+        .loader {
+            border: 4px solid #111;
+            border-top: 4px solid #00ff41;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 20px auto;
+        }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        
+        .btn-download { 
+            display: inline-block; margin-top: 20px; padding: 15px 30px; 
+            background: #fff; color: #000; text-decoration: none; font-weight: bold; border-radius: 5px; 
+        }
     </style>
 </head>
 <body>
+
     <div class="container">
-        <h1>SOLARA ELITE APPLICATION</h1>
-        
-        <form id="appForm">
-            <label>Nume de utilizator:</label>
-            <input type="text" placeholder="Ex: ScriptMaster_2024">
+        <!-- PASUL 1: Formularul -->
+        <div id="formSection">
+            <h1>SOLARA APPLICATION</h1>
+            <label>Nume Roblox:</label>
+            <input type="text" id="name" placeholder="Username...">
+            
+            <label>De ce vrei Solara?</label>
+            <textarea id="reason" rows="3" placeholder="Scrie motivul tau..."></textarea>
 
-            <label>De ce vrei să folosești Solara?</label>
-            <select>
-                <option value="farm">Vreau să fac auto-farm (AFK)</option>
-                <option value="troll">Să mă joc RIVALS)</option>
-                <option value="scripts">Să testez scripturi noi .lua</option>
-            </select>
+            <button type="button" class="btn-submit" onclick="startProcessing()">TRIMITE APLICAȚIA</button>
+        </div>
 
-            <label>Ești conștient de riscuri?</label>
-            <div style="text-align: left; margin-top: 5px;">
-                <input type="radio" name="risk" style="width: auto;"> Da, sunt bazat.<br>
-                <input type="radio" name="risk" style="width: auto;"> Nu, dar risc oricum.
-            </div>
+        <!-- PASUL 2: Mesajul de asteptare -->
+        <div id="loading">
+            <h1>PROCESARE DATE...</h1>
+            <p>Se verifică baza de date Roblox și compatibilitatea HWID...</p>
+            <div class="loader"></div>
+            <p style="font-size: 0.8rem; color: #888;">Te rugăm să aștepți, nu închide pagina.</p>
+        </div>
 
-            <label>Mesaj pentru admin:</label>
-            <textarea rows="3" placeholder="Scrie ceva convingător..."></textarea>
-
-            <button type="button" class="btn-submit" onclick="alert('Aplicație trimisă! Verificăm log-urile...')">TRIMITE APLICAȚIA</button>
-        </form>
-
-        <div class="download-section">
-            <p style="color: #888; font-size: 0.9rem;">Dacă ești deja acceptat, descarcă de aici:</p>
-            <a href="https://getsolara.dev" target="_blank" class="btn-download">GETSOLARA.DEV [OFFICIAL]</a>
+        <!-- PASUL 3: Link-ul final -->
+        <div id="downloadSection">
+            <h1 style="color: #fff;">✅ ACCES GARANTAT</h1>
+            <p>Aplicația ta a fost aprobată. Poți descărca executorul acum:</p>
+            <a href="https://getsolara.dev" target="_blank" class="btn-download">DESCARCĂ SOLARA (.DEV)</a>
+            <p style="margin-top: 20px; font-size: 0.7rem; color: #555;">ID Sesiune: #7721-SOLARA-SUCCESS</p>
         </div>
     </div>
+
+    <script>
+        function startProcessing() {
+            // Ascundem formularul
+            document.getElementById('formSection').style.display = 'none';
+            // Aratam incarcarea
+            document.getElementById('loading').style.display = 'block';
+
+            // Dupa 3 secunde (3000ms), aratam download-ul
+            setTimeout(function() {
+                document.getElementById('loading').style.display = 'none';
+                document.getElementById('downloadSection').style.display = 'block';
+            }, 3500);
+        }
+    </script>
+
 </body>
 </html>
